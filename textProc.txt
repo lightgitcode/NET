@@ -1,0 +1,62 @@
+import nltk 
+import string 
+import contractions 
+from nltk.corpus import stopwords 
+from nltk.tokenize import word_tokenize 
+from textblob import TextBlob 
+from nltk.stem import PorterStemmer, WordNetLemmatizer 
+nltk.download('punkt_tab') 
+nltk.download('stopwords') 
+nltk.download('wordnet') 
+ 
+# Text Normalization 
+print("Text Normalization") 
+text1=input("Enter a Sentence: ") 
+print("Karthik Vinod, TCS2627033") 
+print(f"Original text: {text1}") 
+expanded_text=contractions.fix(text1) 
+print(f"Expanded text: {expanded_text}") 
+ 
+# Tokenization 
+print("\nTokenization") 
+tokens=word_tokenize(expanded_text) 
+print(f"Tokens: {tokens}") 
+ 
+# Lowercase Conversion 
+print("\nLowercase Conversion") 
+lowercase_tokens=[token.lower() for token in tokens] 
+print(f"Lowercase Tokens: {lowercase_tokens}") 
+ 
+# Punctuation Removal 
+print("\nPunctuation Removal") 
+no_punct_tokens=[token for token in lowercase_tokens if token not in 
+string.punctuation] 
+print(f"Punctuation Removal: {no_punct_tokens}") 
+ 
+# Stop Word Remover 
+print("\nStop Word Remover") 
+stop_words=set(stopwords.words('english')) 
+no_stop_tokens=[token for token in no_punct_tokens if token not in stop_words] 
+print(f"Tokens without stop words: {no_stop_tokens}") 
+ 
+# Text Correction 
+print("\nText Correction") 
+correct_tokens=[str(TextBlob(token).correct()) for token in no_stop_tokens] 
+print(f"Token after spelling correction: {correct_tokens}") 
+ 
+# Stemming 
+print("\nStemming") 
+print(f"Original Text: {text1}") 
+tokens=word_tokenize(text1) 
+print(f"Tokens: {tokens}") 
+stemmer=PorterStemmer() 
+stemmed_tokens=[stemmer.stem(token) for token in tokens] 
+print(f"Stemmed Tokens: {stemmed_tokens}") 
+ 
+# Lemmatization 
+print("\nLemmatization") 
+print(f"Original Text: {text1}") 
+lemmatizer=WordNetLemmatizer() 
+print(f"Tokens: {tokens}") 
+lemmatized_tokens=[lemmatizer.lemmatize(token) for token in tokens] 
+print(f"Lemmatized Tokens: {lemmatized_tokens}") 

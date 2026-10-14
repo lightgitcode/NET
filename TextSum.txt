@@ -1,0 +1,63 @@
+
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize, sent_tokenize
+
+nltk.download('stopwords')
+nltk.download('punkt_tab')
+
+
+text = """NLTK is a leading platform for building Python programs
+to work with human language data. It provides easy-to-use
+interfaces for text processing. NLTK is a free, open source
+project. Natural Language Processing helps computers
+understand human language."""
+
+print("Karthik Vinod, TCS2627033")
+print(text)
+
+# Tokenize and remove stopwords
+words = nltk.word_tokenize(text)
+words = [
+    word for word in words
+    if word.lower() not in set(stopwords.words('english'))
+]
+
+# Calculate frequency of words
+wordfreq = dict()
+
+for word in words:
+    word = word.lower()
+    if word in wordfreq:
+        wordfreq[word] += 1
+    else:
+        wordfreq[word] = 1
+
+print(wordfreq)
+
+# Calculate rank of sentences
+sentences = sent_tokenize(text)
+sentrank = dict()
+
+for sentence in sentences:
+    for word, freq in wordfreq.items():
+        if word in sentence.lower():
+            if sentence in sentrank:
+                sentrank[sentence] += freq
+            else:
+                sentrank[sentence] = freq
+
+print(sentrank)
+
+# Summarize according to sentence rank
+sumrank = sum(sentrank.values())
+averagerank = sumrank / len(sentrank)
+
+summary = ""
+
+for sentence in sentences:
+    if sentence in sentrank and sentrank[sentence] > 1.2 * averagerank:
+        summary = summary + sentence
+
+print("Summary:", summary)
+
