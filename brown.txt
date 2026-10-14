@@ -1,0 +1,21 @@
+import nltk 
+nltk.download('brown') 
+from nltk.corpus import brown 
+  
+print(f"File ID's of Brown Corpus is {brown.fileids()}")
+
+ca01=brown.words('ca01') 
+print(f'Words in ca01 are as follows: {ca01}') 
+
+print(f"ca01 has {len(ca01)} Words") 
+
+print(f"Categories in Brown Corpus are: \n{brown.categories()}") 
+
+print("Karthik Vinod, TCS2627033") 
+print("Average Word Length\t Average Sentence Length\t\t Number of Time each word appears on Average\t\t File Name") 
+for fileid in brown.fileids(): 
+    num_chars=len(brown.raw(fileid)) 
+    num_words=len(brown.words(fileid)) 
+    num_sent=len(brown.sents(fileid)) 
+    num_vocab=len(set([w.lower() for w in brown.raw(fileid)])) 
+    print(f'{int(num_chars/num_words)}\t\t\t\t {int(num_words/num_sent)}\t\t\t\t {int(num_words/num_vocab)}\t\t\t\t\t\t\t {fileid}') 
